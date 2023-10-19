@@ -1,15 +1,20 @@
 #include<stdio.h>
+#include <string.h>
 
+int ingresarDato(int);
 char butacasIniciales(char[][9], int, int);
 char reservarButacas(char[][9], int, int);
 char mostrarReservas(char[][9], int, int);
-int ingresarDato(int);
+char filasVacias(char[][9], int, int);
+int cantReservaFilas(char[][9], int[], int, int);
 
 int main() {
     char cine[12][9];
+    int cantidad[12];
     butacasIniciales(cine, 12, 9);
     reservarButacas(cine, 12, 9);
-
+    filasVacias(cine, 12, 9);
+    cantReservaFilas(cine, cantidad, 12, 9);
 
     return 0;
 }
@@ -34,7 +39,7 @@ char butacasIniciales(char cine[][9], int cf, int cc){
 
     for(f = 0; f <= cf - 1; f++){
         for(c = 0; c <= cc - 1; c++){
-            cine[f][c] = "D";
+            cine[f][c] = 'D';
         }
     }
 }
@@ -80,7 +85,7 @@ char reservarButacas(char cine[][9], int cf, int cc){
             break;
         }
 
-        cine[fila - 1][columna - 1] = "R";
+        cine[fila - 1][columna - 1] = 'R';
         reservas++;
         disponibles--;
 
@@ -111,6 +116,51 @@ char mostrarReservas(char cine[][9], int cf, int cc){
             printf("\n", f+1, "\t");
         for(c = 0; c <= cc - 1; c++){
             printf("%c \t", cine[f][c]);
+        }
+    }
+}
+
+char filasVacias(char cine[][9], int cf, int cc){
+    int f, c;
+    int fila = 0;
+    int band = 0;
+
+    for(f = 0; f <= cf - 1; f++){
+        for(c = 0; c <= cc - 1; c++){
+            if(cine[f][c] == 'R') {
+               band = 1;
+
+               if(band == 1) {
+                f++;
+               }
+            } else {
+                fila = f+1;
+            }
+        }
+        printf("La fila %d esta vacia \n", fila);
+    }
+
+}
+
+int cantReservaFilas(char cine[][9], int cantidad[], int cf, int cc){
+    int f, c;
+    int espectadores = 0;
+
+    for(f = 0; f <= cf - 1; f++){
+        cantidad[f] = 0;
+        for(c = 0; c <= cc - 1; c++){
+            if(cine[f][c] == 'R') {
+                espectadores++;
+                cantidad[f] = espectadores;
+            }
+        }
+        printf("La cantidad de espectadores en la fila %d es: %d \n", f+1, cantidad[f]);
+        espectadores = 0;
+    }
+
+    for(f = 0; f <= cf - 1; f++) {
+        if(cantidad[f] > 0) {
+            printf("La fila %d tiene la mayor cantidad de espectadores \n", f + 1);
         }
     }
 }
