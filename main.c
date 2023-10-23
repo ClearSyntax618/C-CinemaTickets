@@ -7,6 +7,7 @@ char reservarButacas(char[][9], int, int);
 char mostrarReservas(char[][9], int, int);
 char filasVacias(char[][9], int, int);
 int cantReservaFilas(char[][9], int[], int, int);
+int cantPersonas(char[][9], int[], int, int);
 
 int main() {
     char cine[12][9];
@@ -15,6 +16,7 @@ int main() {
     reservarButacas(cine, 12, 9);
     filasVacias(cine, 12, 9);
     cantReservaFilas(cine, cantidad, 12, 9);
+    cantPersonas(cine, cantidad, 12, 9);
 
     return 0;
 }
@@ -162,5 +164,17 @@ int cantReservaFilas(char cine[][9], int cantidad[], int cf, int cc){
         if(cantidad[f] > 0) {
             printf("La fila %d tiene la mayor cantidad de espectadores \n", f + 1);
         }
+    }
+}
+
+int cantPersonas(char cine[][9], int cantidad[], int cf, int cc) {
+    int f;
+
+    printf("Butaca \t");
+    printf("Cantidad \n");
+
+    for(f = 0; f <= cf - 1; f++) {
+        printf("%d \t", f+1);
+        printf("%d \n", cantidad[f]);
     }
 }
